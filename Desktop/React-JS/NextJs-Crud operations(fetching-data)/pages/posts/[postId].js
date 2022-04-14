@@ -16,7 +16,7 @@ function IndividualPost({ post }) {
       </div>
       <br />
       <Link href="/posts" passHref>
-        <button>Go back to posts</button>
+        <button>Go back to posts list</button>
       </Link>
     </div>
   );
@@ -45,7 +45,7 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
   const { params } = context;
   const response = await axios.get(
-    `http://localhost:3000/api/posts-data/${params.postId}`
+    `http://localhost:4000/posts/${params.postId}`
   );
   return {
     props: {

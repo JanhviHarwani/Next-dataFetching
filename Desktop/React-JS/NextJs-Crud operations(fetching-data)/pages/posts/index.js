@@ -1,38 +1,44 @@
-import React from "react";
 import Post from "../../components/post";
-import axios from "axios";
-import Link from "next/link";
-import { useState } from "react/cjs/react.production.min";
+
+import React from "react";
+
 import useApiManipulate from "../../hooks/useApiManipulate";
 
-function Posts({ posts }) {
+function Posts() {
+  const URL = "http://localhost:4000/posts";
+  const { posts, loading, error } = useApiManipulate(URL);
+console.log(posts)
   return (
     <>
       <h1 style={{ margin: "5%" }}>Posts</h1>
-      {posts.map((obj) => {
-        if (obj === undefined) {
-          return;
-        }
-        return (
-          <div style={{ margin: "8%" }} key={obj.id}>
-            <Post post={obj} />
-          </div>
-        );
-      })}
-      ;
+      {loading && <p>Loading...</p>}
+      {error && <p>Error</p>}
+      {JSON.stringify(posts)}
+      {/* {posts &&
+        posts.map((obj) => {
+          if (obj === undefined) {
+            return;
+          }
+          return (
+            <div style={{ margin: "8%" }} key={obj.id}>
+              <Post post={obj} />
+            </div>
+          );
+        })} */}
+
     </>
   );
 }
 
 export default Posts;
+// http://localhost:3000/api/posts-data
+// export function getStaticProps() {
+//   const postsFetched = fetchPostData();
 
-export async function getStaticProps() {
-  const response = await axios.get("http://localhost:3000/api/posts-data");
-
-  console.log(response.data);
-  return {
-    props: {
-      posts: response.data,
-    },
-  };
-}
+//   console.log(postsFetched);
+//   return {
+//     props: {
+//       posts: postsFetched,
+//     },
+//   };
+// }
